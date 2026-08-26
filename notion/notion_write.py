@@ -1,4 +1,11 @@
 from dotenv import load_dotenv
+from pathlib import Path
+import sys
+
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+if str(PROJECT_ROOT) not in sys.path:
+    sys.path.insert(0, str(PROJECT_ROOT))
+
 from model_request.tutor import Tutor
 import os
 import requests
@@ -9,7 +16,7 @@ class NotionWriter:
     def __init__(self, block_id):
         self.notion_token = os.getenv("NOTION_TOKEN")
         self.block_id = block_id
-        self.base_url = f"https://api.notion.com/v1/blocks/{self.block_id}/children"
+        self.base_url = f"https://api.notion.com/v1/pages/{self.block_id}/markdown"
         self.headers = {
             "Authorization": f"Bearer {self.notion_token}",
             "Content-Type": "application/json",
@@ -25,26 +32,14 @@ class NotionWriter:
         content = self.get_definition()
 
         data = {
-            "children": [
-                {
-                    "object": "block",
-                    "type": "paragraph",
-                    "paragraph": {
-                        "rich_text": [
-                            {
-                                "type": "text",
-                                "text": {
-                                    "content": content
-                                }
-                            }
-                        ]
-                    }
-                }
-            ],
+        "type": "insert_content",
+        "insert_content": {
+            "content": content,
             "position": {
             "type": "end"
             }
         }
+    }
 
         response = requests.patch(self.base_url, headers=self.headers, json=data)
         if response.status_code == 200:
