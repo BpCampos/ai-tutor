@@ -1,11 +1,11 @@
 import ollama
 
-client = ollama.Client()
+class Tutor:
+    def __init__(self):
+        self.client = ollama.Client()
+        self.model = "english-tutor"
 
-model = "english-tutor"
-
-prompt = input("Write the word you want to understand: ")
-
-response = client.generate(model=model, prompt=prompt)
-
-print(f"{response.response}")
+    def get_definition(self):
+        prompt = input("Type the word you want to learn: ")
+        response = self.client.generate(model=self.model, prompt=prompt)
+        return response.response
