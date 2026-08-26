@@ -26,20 +26,29 @@ class NotionWriter:
     def get_definition(self):
         tutor = Tutor()
         definition = tutor.get_definition()
-        return definition
+        data = {
+                "type": "insert_content",
+                "insert_content": {
+                    "content": f"""{definition}
+---
+                                """,
+                    "position": {
+                    "type": "end"
+                    }
+                }
+            }
+
+        return data
 
     def write_to_notion(self):
-        content = self.get_definition()
 
-        data = {
-        "type": "insert_content",
-        "insert_content": {
-            "content": content,
-            "position": {
-            "type": "end"
-            }
-        }
-    }
+        data = self.get_definition()
+
+        to_write = input("Write the definition to Notion? (y/n): ")
+
+        if to_write.lower() != 'y':
+            print("Aborted writing to Notion.")
+            return
 
         response = requests.patch(self.base_url, headers=self.headers, json=data)
         if response.status_code == 200:
