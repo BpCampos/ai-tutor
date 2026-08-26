@@ -25,7 +25,7 @@ ollama run <model>
 ---
 
 ### Python alternative do CLI
-- If instead of running the model using the terminal directly, you can install a library call [ollama](https://pypi.org/project/ollama/) using **pip**
+- If instead of running the model using the terminal directly, you can install a library called [ollama](https://pypi.org/project/ollama/) using **pip**
 
 - After installing the library, simply create a python file to call the model using a prompt like the template script below
 
