@@ -1,4 +1,5 @@
 ## Running models locally with Ollama
+The main goal of this project is to help you run a free llm model on your computer to help with basic tasks, such as improving your vocabulary in a new language.
 
 ### Download and install ollama
 - The first step is to download ollama on your computer through their [website](https://ollama.com/)
@@ -44,3 +45,14 @@ class Tutor:
         return response.response
 
 ```
+---
+## Fine tune the model
+
+### Modelfile
+- By creating a Modelfile, you can give context to the model on what and how it should answer the user input
+- In the Modelfile, there is the keyword SYSTEM that enables you to write how the model should answer. Along with the SYSTEM, you need to pass the model you want to use via the key word FROM 'model-name'
+- After writing the instructions to the model, you can create a new model by typing
+```
+ollama create <chosen_model_name> -f /path/to/Modelfile 
+```
+- After creating you customized model, you can use in the terminal or in the python file
