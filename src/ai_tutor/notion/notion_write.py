@@ -1,12 +1,5 @@
 from dotenv import load_dotenv
-from pathlib import Path
-import sys
-
-PROJECT_ROOT = Path(__file__).resolve().parents[1]
-if str(PROJECT_ROOT) not in sys.path:
-    sys.path.insert(0, str(PROJECT_ROOT))
-
-from model_request.tutor import Tutor
+from ai_tutor.model_request.tutor import Tutor
 import os
 import requests
 
@@ -55,6 +48,3 @@ class NotionWriter:
             print("Content written to Notion successfully.")
         else:
             print(f"Failed to write to Notion: {response.status_code}, {response.text}")
-
-notion_writer = NotionWriter(block_id="2fe159311885804686c2d026bb17c02e")
-notion_writer.write_to_notion()
